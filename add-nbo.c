@@ -1,15 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-// endian change(big to little)
-uint32_t bigEndianToLittleEndian(uint32_t value) {
-    uint32_t result = ((value & 0xFF) << 24) |
-                      ((value & 0xFF00) << 8) |
-                      ((value & 0xFF0000) >> 8) |
-                      ((value & 0xFF000000) >> 24);
-    return result;
-}
-
 int main(int argc, char *argv[]) {
     if (argc < 3) {
         printf("파일 경로를 제대로 입력해주세요.\n");
@@ -33,8 +24,8 @@ int main(int argc, char *argv[]) {
     fread(&value_b, sizeof(uint32_t), 1, file_b);
 
     // change endian 
-    value_a = bigEndianToLittleEndian(value_a);
-    value_b = bigEndianToLittleEndian(value_b);
+    value_a = ntohl(value_a);
+    value_b = ntohl(value_b);
 
    
     sum = value_a + value_b;
